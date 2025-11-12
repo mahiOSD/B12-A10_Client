@@ -4,12 +4,14 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
+import CourseDetails from "./pages/CourseDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import DashboardLayout from "./layouts/DashboardLayout";
 import MyEnrolledCourses from "./pages/Dashboard/MyEnrolledCourses";
 import AddCourse from "./pages/Dashboard/AddCourse";
 import MyAddedCourses from "./pages/Dashboard/MyAddedCourses";
+import UpdateCourse from "./pages/Dashboard/UpdateCourse";
 import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
@@ -20,6 +22,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
+          <Route
+            path="/courses/:id"
+            element={
+              <PrivateRoute>
+                <CourseDetails />
+              </PrivateRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -33,6 +43,8 @@ function App() {
             <Route path="enrolled" element={<MyEnrolledCourses />} />
             <Route path="add-course" element={<AddCourse />} />
             <Route path="my-courses" element={<MyAddedCourses />} />
+            <Route path="update-course/:id" element={<UpdateCourse />} />
+
           </Route>
         </Routes>
       </div>
