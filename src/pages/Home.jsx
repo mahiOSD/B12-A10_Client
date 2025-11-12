@@ -143,7 +143,7 @@ export default function Home() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          👩‍🏫 Top Instructors
+          Top Instructors
         </motion.h2>
         <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {[

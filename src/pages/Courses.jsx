@@ -3,22 +3,20 @@ import axios from "axios";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
-  const [category, setCategory] = useState(""); 
-
-  
-  const fetchCourses = async () => {
-    try {
-      const url = category
-        ? `http://localhost:3000/courses?category=${category}`
-        : "http://localhost:3000/courses";
-      const res = await axios.get(url);
-      setCourses(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const url = category
+          ? `http://localhost:3000/courses?category=${category}`
+          : "http://localhost:3000/courses";
+        const res = await axios.get(url);
+        setCourses(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     fetchCourses();
   }, [category]);
 
@@ -29,8 +27,6 @@ export default function Courses() {
       <h1 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
         All Courses
       </h1>
-
-     
       <div className="flex justify-center gap-4 mb-6">
         {categories.map((cat) => (
           <button
@@ -44,14 +40,9 @@ export default function Courses() {
           </button>
         ))}
       </div>
-
-     
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
-          <div
-            key={course._id}
-            className="bg-white p-4 rounded-2xl shadow-lg flex flex-col"
-          >
+          <div key={course._id} className="bg-white p-4 rounded-2xl shadow-lg flex flex-col">
             <img
               src={course.image}
               alt={course.title}
