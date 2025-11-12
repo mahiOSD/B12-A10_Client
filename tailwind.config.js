@@ -8,4 +8,5 @@ export default {
     extend: {},
   },
   plugins: [],
-}
+  presets: [import('@tailwindcss/preset-tailwind')],
+};

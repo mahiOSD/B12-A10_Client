@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
+import { auth, provider } from "../firebaseConfig";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -12,15 +14,19 @@ export default function Register() {
   });
   const navigate = useNavigate();
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const password = formData.password;
-    if (!/[A-Z]/.test(password)) return toast.error("Password must have at least one uppercase letter.");
-    if (!/[a-z]/.test(password)) return toast.error("Password must have at least one lowercase letter.");
-    if (password.length < 6) return toast.error("Password must be at least 6 characters long.");
+    if (!/[A-Z]/.test(password))
+      return toast.error("Password must have at least one uppercase letter.");
+    if (!/[a-z]/.test(password))
+      return toast.error("Password must have at least one lowercase letter.");
+    if (password.length < 6)
+      return toast.error("Password must be at least 6 characters long.");
 
     try {
       const res = await axios.post("http://localhost:3000/register", formData);
@@ -32,24 +38,28 @@ export default function Register() {
     }
   };
 
+
   const handleGoogleLogin = async () => {
     try {
-      const googleUser = {
-        name: "Google User",
-        email: "google@example.com",
-        photoURL: "https://i.ibb.co/5nR7bD8/google.png",
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const userData = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
       };
-      const res = await axios.post("http://localhost:3000/google-login", googleUser);
+      const res = await axios.post("http://localhost:3000/google-login", userData);
       toast.success(res.data.message);
       localStorage.setItem("token", res.data.token);
       navigate("/");
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Google login failed");
     }
   };
 
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-auto mt-20">
       <h2 className="text-2xl font-bold text-center mb-6 text-indigo-600">Register</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
