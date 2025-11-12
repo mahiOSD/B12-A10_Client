@@ -19,24 +19,24 @@ export default function Register() {
 
  
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const password = formData.password;
-    if (!/[A-Z]/.test(password))
-      return toast.error("Password must have at least one uppercase letter.");
-    if (!/[a-z]/.test(password))
-      return toast.error("Password must have at least one lowercase letter.");
-    if (password.length < 6)
-      return toast.error("Password must be at least 6 characters long.");
+  e.preventDefault();
+  const password = formData.password;
+  if (!/[A-Z]/.test(password))
+    return toast.error("Password must have at least one uppercase letter.");
+  if (!/[a-z]/.test(password))
+    return toast.error("Password must have at least one lowercase letter.");
+  if (password.length < 6)
+    return toast.error("Password must be at least 6 characters long.");
 
-    try {
-      const res = await axios.post("http://localhost:3000/register", formData);
-      toast.success(res.data.message);
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
-    }
-  };
+  try {
+    const res = await axios.post("http://localhost:3000/register", formData);
+    toast.success(res.data.message);
+    navigate("/login"); 
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Registration failed");
+  }
+};
+
 
 
   const handleGoogleLogin = async () => {
