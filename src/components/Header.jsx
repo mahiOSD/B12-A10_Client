@@ -18,7 +18,7 @@ export default function Header() {
     <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <Link to="/" className="text-2xl font-bold text-indigo-600">
-           Learnify
+          Learnify
         </Link>
 
         <nav className="flex gap-4">

@@ -5,11 +5,19 @@ export default function Footer() {
         <div className="flex justify-center mb-3">
           <span className="text-indigo-600 font-bold text-xl">🎓 Learnify</span>
         </div>
-        <p className="text-gray-600">&copy; {new Date().getFullYear()} Learnify. All rights reserved.</p>
+        <p className="text-gray-600">
+          &copy; {new Date().getFullYear()} Learnify. All rights reserved.
+        </p>
         <div className="flex justify-center gap-4 mt-3">
-          <a href="#" className="text-gray-600 hover:text-indigo-500">Facebook</a>
-          <a href="#" className="text-gray-600 hover:text-indigo-500">Twitter</a>
-          <a href="#" className="text-gray-600 hover:text-indigo-500">LinkedIn</a>
+          <a href="#" className="text-gray-600 hover:text-indigo-500">
+            Facebook
+          </a>
+          <a href="#" className="text-gray-600 hover:text-indigo-500">
+            Twitter
+          </a>
+          <a href="#" className="text-gray-600 hover:text-indigo-500">
+            LinkedIn
+          </a>
         </div>
       </div>
     </footer>

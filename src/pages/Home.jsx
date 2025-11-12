@@ -7,10 +7,10 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) navigate("/login");
-  }, []);
+  }, [navigate]);
 
   return (
-    <div className="text-center bg-white shadow-xl rounded-2xl p-10 max-w-lg">
+    <div className="text-center mt-10 pt-20">
       <h1 className="text-3xl font-bold text-indigo-600 mb-4">
         🎓 Welcome to Online Learning Platform
       </h1>

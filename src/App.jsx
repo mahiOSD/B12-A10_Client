@@ -15,14 +15,12 @@ function App() {
   return (
     <Router>
       <Header />
-      <div className="min-h-[80vh] pt-20">
+      <div className="min-h-[80vh] pt-20 px-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
-          {/* Private Dashboard */}
           <Route
             path="/dashboard"
             element={
