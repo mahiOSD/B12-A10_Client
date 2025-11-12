@@ -12,12 +12,16 @@ export default function Register() {
   });
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const password = formData.password;
+    if (!/[A-Z]/.test(password)) return toast.error("Password must have at least one uppercase letter.");
+    if (!/[a-z]/.test(password)) return toast.error("Password must have at least one lowercase letter.");
+    if (password.length < 6) return toast.error("Password must be at least 6 characters long.");
+
     try {
       const res = await axios.post("http://localhost:3000/register", formData);
       toast.success(res.data.message);
@@ -28,17 +32,76 @@ export default function Register() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const googleUser = {
+        name: "Google User",
+        email: "google@example.com",
+        photoURL: "https://i.ibb.co/5nR7bD8/google.png",
+      };
+      const res = await axios.post("http://localhost:3000/google-login", googleUser);
+      toast.success(res.data.message);
+      localStorage.setItem("token", res.data.token);
+      navigate("/");
+    } catch {
+      toast.error("Google login failed");
+    }
+  };
+
   return (
-    <div style={{ maxWidth: 400, margin: "40px auto" }}>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Name" onChange={handleChange} required />
-        <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
-        <input name="photoURL" placeholder="Photo URL" onChange={handleChange} />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-        <button type="submit">Register</button>
+    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <h2 className="text-2xl font-bold text-center mb-6 text-indigo-600">Register</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          name="name"
+          placeholder="Full Name"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="photoURL"
+          placeholder="Photo URL"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          onChange={handleChange}
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          onChange={handleChange}
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-all"
+        >
+          Register
+        </button>
       </form>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+
+      <button
+        onClick={handleGoogleLogin}
+        className="w-full bg-red-500 text-white py-2 rounded-lg mt-4 hover:bg-red-600 transition-all"
+      >
+        Sign in with Google
+      </button>
+
+      <p className="text-center text-sm mt-4">
+        Already have an account?{" "}
+        <Link to="/login" className="text-indigo-600 hover:underline">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }
