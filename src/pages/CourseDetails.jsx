@@ -52,7 +52,10 @@ export default function CourseDetails() {
       <p className="text-gray-700 mb-4">{course.description}</p>
       <button
         onClick={handleEnroll}
-        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition"
+         className="px-6 py-3 rounded-lg font-semibold text-white 
+             bg-linear-to-r from-indigo-500 to-blue-500 
+             hover:from-indigo-600 hover:to-blue-600 
+             transition-all"
       >
         Enroll Now
       </button>

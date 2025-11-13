@@ -17,27 +17,30 @@ export default function Register() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
- 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const password = formData.password;
-  if (!/[A-Z]/.test(password))
-    return toast.error("Password must have at least one uppercase letter.");
-  if (!/[a-z]/.test(password))
-    return toast.error("Password must have at least one lowercase letter.");
-  if (password.length < 6)
-    return toast.error("Password must be at least 6 characters long.");
+    e.preventDefault();
+    const password = formData.password;
+    if (!/[A-Z]/.test(password))
+      return toast.error("Password must have at least one uppercase letter.");
+    if (!/[a-z]/.test(password))
+      return toast.error("Password must have at least one lowercase letter.");
+    if (password.length < 6)
+      return toast.error("Password must be at least 6 characters long.");
 
-  try {
-    const res = await axios.post("http://localhost:3000/register", formData);
-    toast.success(res.data.message);
-    navigate("/login"); 
-  } catch (err) {
-    toast.error(err.response?.data?.message || "Registration failed");
-  }
-};
+    try {
+      const res = await axios.post("http://localhost:3000/register", formData);
+      toast.success(res.data.message);
 
+    
+      localStorage.setItem("userName", formData.name);
+      localStorage.setItem("userEmail", formData.email);
+      if (res.data.token) localStorage.setItem("token", res.data.token);
 
+      navigate("/login"); 
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Registration failed");
+    }
+  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -50,8 +53,13 @@ export default function Register() {
       };
       const res = await axios.post("http://localhost:3000/google-login", userData);
       toast.success(res.data.message);
+
+      
+      localStorage.setItem("userName", user.displayName);
+      localStorage.setItem("userEmail", user.email);
       localStorage.setItem("token", res.data.token);
-      navigate("/");
+
+      navigate("/login");
     } catch (err) {
       console.error(err);
       toast.error("Google login failed");
@@ -93,18 +101,23 @@ export default function Register() {
         />
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-all"
+          className="w-full py-3 rounded-xl bg-linear-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all"
         >
           Register
         </button>
       </form>
 
-      <button
-        onClick={handleGoogleLogin}
-        className="w-full bg-red-500 text-white py-2 rounded-lg mt-4 hover:bg-red-600 transition-all"
-      >
-        Sign in with Google
-      </button>
+       <button
+          onClick={handleGoogleLogin}
+          className="w-full py-3 rounded-xl mt-4 bg-linear-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:from-red-600 hover:to-pink-600 transition-all flex items-center justify-center gap-2"
+        >
+           <img
+    src="https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png"
+    alt="Google logo"
+    className="w-6 h-6"
+  />
+          Sign in with Google
+        </button>
 
       <p className="text-center text-sm mt-4">
         Already have an account?{" "}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -9,10 +9,18 @@ export default function AddCourse() {
     category: "",
     price: "",
     duration: "",
-    instructor: "",
+    instructor: "", 
     imageBase64: "",
     isFeatured: false,
   });
+
+ 
+  useEffect(() => {
+    const userName = localStorage.getItem("userName"); 
+    if (userName) {
+      setCourseData(prev => ({ ...prev, instructor: userName }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,7 +30,6 @@ export default function AddCourse() {
     });
   };
 
-  
   const handleImage = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -31,39 +38,37 @@ export default function AddCourse() {
     reader.readAsDataURL(file);
   };
 
-  
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const userEmail = localStorage.getItem("userEmail"); 
+    e.preventDefault();
+    const userEmail = localStorage.getItem("userEmail");
 
-  if (!userEmail) {
-    toast.error("Please login first!");
-    return;
-  }
+    if (!userEmail) {
+      toast.error("Please login first!");
+      return;
+    }
 
-  const newCourse = {
-    ...courseData,
-    ownerEmail: userEmail, 
+    const newCourse = {
+      ...courseData,
+      ownerEmail: userEmail,
+    };
+
+    try {
+      await axios.post("http://localhost:3000/courses", newCourse);
+      toast.success("Course added successfully!");
+      setCourseData({
+        title: "",
+        description: "",
+        category: "",
+        price: "",
+        duration: "",
+        instructor: localStorage.getItem("userName") || "",
+        imageBase64: "",
+        isFeatured: false,
+      });
+    } catch (err) {
+      toast.error("Failed to add course");
+    }
   };
-
-  try {
-    await axios.post("http://localhost:3000/courses", newCourse);
-    toast.success("Course added successfully!");
-    setCourseData({
-      title: "",
-      description: "",
-      category: "",
-      price: "",
-      duration: "",
-      instructor: "",
-      imageBase64: "",
-      isFeatured: false,
-    });
-  } catch (err) {
-    toast.error("Failed to add course");
-  }
-};
-
 
   return (
     <div className="p-6 max-w-lg mx-auto">
@@ -84,9 +89,8 @@ export default function AddCourse() {
           name="instructor"
           placeholder="Instructor Name"
           value={courseData.instructor}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
+          readOnly 
+          className="w-full p-2 border rounded bg-gray-100"
         />
         <input
           type="number"

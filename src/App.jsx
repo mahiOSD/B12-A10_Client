@@ -13,7 +13,7 @@ import AddCourse from "./pages/Dashboard/AddCourse";
 import MyAddedCourses from "./pages/Dashboard/MyAddedCourses";
 import UpdateCourse from "./pages/Dashboard/UpdateCourse";
 import PrivateRoute from "./routes/PrivateRoute";
-
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <Router>
@@ -46,6 +46,7 @@ function App() {
             <Route path="enrolled" element={<MyEnrolledCourses />} />
             <Route path="add-course" element={<AddCourse />} />
             <Route path="my-courses" element={<MyAddedCourses />} />
+            <Route path="*" element={<NotFound />} />
             <Route
               path="update-course/:id"
               element={

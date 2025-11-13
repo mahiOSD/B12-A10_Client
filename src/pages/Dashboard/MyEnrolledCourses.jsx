@@ -31,30 +31,53 @@ export default function MyEnrolledCourses() {
     fetchEnrolled();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading)
+    return <p className="text-center mt-10 text-gray-600">Loading...</p>;
   if (!courses.length)
     return (
-      <p className="text-center mt-10">
-        No enrolled courses yet. <button onClick={fetchEnrolled} className="text-blue-600 underline">Refresh</button>
+      <p className="text-center mt-10 text-gray-600">
+        You have not enrolled in any courses yet.
       </p>
     );
 
   return (
-    <div className="p-6">
+    <div className="pt-24 px-6">
       <Toaster />
-      <h2 className="text-2xl font-semibold mb-4">📘 My Enrolled Courses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+     
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-indigo-600">
+          My Enrolled Courses
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Browse the courses you are currently enrolled in
+        </p>
+      </div>
+
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
-          <div key={course._id} className="border p-4 rounded shadow">
+          <div
+            key={course._id}
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-5 flex flex-col transition-transform hover:scale-105 hover:shadow-2xl"
+          >
             <img
               src={course.image}
               alt={course.title}
-              className="w-full h-40 object-cover rounded mb-2"
+              className="w-full h-48 object-cover rounded-lg mb-4"
             />
-            <h3 className="font-bold text-lg">{course.title}</h3>
-            <p className="text-gray-600">Instructor: {course.instructor}</p>
-            <p className="text-gray-600">Duration: {course.duration}</p>
-            <p className="text-gray-600">Price: ৳{course.price}</p>
+            <h3 className="font-bold text-xl text-indigo-600 mb-2">
+              {course.title}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-1">
+              Instructor: {course.instructor}
+            </p>
+            <p className="text-gray-600 dark:text-gray-300 mb-1">
+              Duration: {course.duration}
+            </p>
+            <p className="text-gray-600 dark:text-gray-300 mb-2">
+              Price: ৳{course.price}
+            </p>
           </div>
         ))}
       </div>

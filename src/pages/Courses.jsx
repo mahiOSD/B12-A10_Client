@@ -29,19 +29,23 @@ export default function Courses() {
       <h1 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
         All Courses
       </h1>
-      <div className="flex justify-center gap-4 mb-6">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setCategory(cat === "All" ? "" : cat)}
-            className={`px-4 py-2 rounded-md font-semibold ${
-              category === cat ? "bg-indigo-600 text-white" : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+     <div className="flex justify-center gap-4 mb-6 flex-wrap">
+  {categories.map((cat) => (
+    <button
+      key={cat}
+      onClick={() => setCategory(cat === "All" ? "" : cat)}
+      className={`px-5 py-2 rounded-full font-semibold transition-all duration-300 
+                  ${
+                    category === cat
+                      ? "bg-linear-to-r from-indigo-500 to-blue-500 text-white shadow-lg transform scale-105"
+                      : "bg-gray-200 text-gray-700 hover:bg-indigo-100 hover:text-indigo-600"
+                  }`}
+    >
+      {cat}
+    </button>
+  ))}
+</div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
           <div key={course._id} className="bg-white p-4 rounded-2xl shadow-lg flex flex-col">
@@ -56,7 +60,10 @@ export default function Courses() {
             <p className="text-gray-500 mb-4">Price: ৳{course.price}</p>
             <button
               onClick={() => navigate(`/courses/${course._id}`)} 
-              className="mt-auto bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-all"
+               className="px-6 py-3 rounded-lg font-semibold text-white 
+             bg-linear-to-r from-indigo-500 to-blue-500 
+             hover:from-indigo-600 hover:to-blue-600 
+             transition-all"
             >
               View Details
             </button>

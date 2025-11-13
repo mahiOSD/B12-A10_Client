@@ -63,9 +63,9 @@ export default function Home() {
 
   return (
     <div className={darkMode ? "dark bg-gray-900 text-white" : "bg-white text-gray-900"}>
-      {/* 🌗 Theme Switch */}
+     
       <div className="fixed top-5 right-5 z-50 flex items-center space-x-2">
-        <span className="text-sm font-medium">{darkMode ? "🌙 Dark" : "☀️ Light"}</span>
+        <span className="text-sm font-medium">{darkMode ? " Dark" : ""}</span>
         <div
           onClick={toggleTheme}
           className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition ${
@@ -82,37 +82,41 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-24 space-y-24">
-        {/* Hero Section */}
-        <section className="text-center px-6">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4 dark:text-indigo-400"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Welcome to Learnify – Your Path to Knowledge
-          </motion.h1>
-          <motion.p
-            className="text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-300"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            Explore expert-led courses, develop real-world skills, and achieve your career goals —
-            all from one platform.
-          </motion.p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/courses")}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition dark:bg-indigo-500 dark:hover:bg-indigo-600"
-          >
-            Explore Courses
-          </motion.button>
-        </section>
+      <div className="mt-0 space-y-24">
+       <section className="text-center px-6 mt-0">
+  <motion.h1
+    className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4 dark:text-indigo-400"
+    initial={{ opacity: 0, y: -30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+  >
+    Welcome to Learnify - Your Path to Knowledge
+  </motion.h1>
+  <motion.p
+    className="text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-300"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.4 }}
+  >
+    Explore expert-led courses, develop real-world skills, and achieve your career goals —
+    all from one platform.
+  </motion.p>
+  <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => navigate("/courses")}
+  className="px-6 py-3 rounded-lg font-semibold text-white 
+             bg-linear-to-r from-indigo-500 to-blue-500 
+             hover:from-indigo-600 hover:to-blue-600 
+             transition-all"
+>
+  Explore Courses
+</motion.button>
 
-        {/* Popular Courses */}
+</section>
+
+
+      
         <section className="px-6">
           <motion.h2
             className="text-3xl font-bold text-center text-gray-800 mb-10 dark:text-gray-200"
@@ -146,7 +150,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Why Choose Learnify */}
+      
         <section className="bg-indigo-50 dark:bg-gray-800 py-16 text-center px-6">
           <motion.h2
             className="text-3xl font-bold text-gray-800 mb-10 dark:text-gray-200"
@@ -179,7 +183,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Top Instructors */}
+       
         <section className="px-6 pb-20 text-center">
           <motion.h2
             className="text-3xl font-bold text-gray-800 mb-10 dark:text-gray-200"
