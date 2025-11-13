@@ -1,16 +1,28 @@
-# React + Vite
+# Learnify - Online Learning Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** [https://your-live-site-url.com](https://friendly-youtiao-27df77.netlify.app/)
 
-Currently, two official plugins are available:
+Learnify is an interactive online learning platform where users can explore expert-led courses, develop real-world skills, and achieve their career goals.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Wide Range of Courses:** Access courses in Web Development, Data Science, UI/UX Design, Digital Marketing, Cybersecurity, and Mobile App Development.  
+- **Expert Instructors:** Learn from industry professionals with real-world experience.  
+- **Flexible Learning:** Study anytime, anywhere, on any device with a responsive and user-friendly interface.  
+- **Dark Mode Support:** Easily switch between light and dark themes for comfortable learning.  
+- **User Authentication:** Secure login with email/password and Google Sign-In integration.  
+- **Interactive UI:** Engaging and animated interface powered by React, Tailwind CSS, and Framer Motion.  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React.js for frontend development  
+- Tailwind CSS for styling  
+- Framer Motion for animations  
+- Firebase Authentication for Google login  
+- Axios for API requests  
+- React Router for routing  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How to Use
+
+1. Clone the repository:  
+   
