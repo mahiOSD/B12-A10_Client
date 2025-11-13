@@ -10,7 +10,7 @@ export default function CourseDetails() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/courses/${id}`);
+        const res = await axios.get(`https://server-two-virid.vercel.app/courses/${id}`);
         setCourse(res.data);
       } catch (err) {
         toast.error("Failed to fetch course");
@@ -27,7 +27,7 @@ export default function CourseDetails() {
         return;
       }
 
-      await axios.post(`http://localhost:3000/enroll/${id}`, { email: userEmail });
+      await axios.post(`https://server-two-virid.vercel.app/enroll/${id}`, { email: userEmail });
       toast.success("Enrolled successfully!");
     } catch (err) {
       toast.error("Failed to enroll in course");

@@ -28,7 +28,7 @@ export default function Register() {
       return toast.error("Password must be at least 6 characters long.");
 
     try {
-      const res = await axios.post("http://localhost:3000/register", formData);
+      const res = await axios.post("https://server-two-virid.vercel.app/register", formData);
       toast.success(res.data.message);
 
     
@@ -51,7 +51,7 @@ export default function Register() {
         email: user.email,
         photoURL: user.photoURL,
       };
-      const res = await axios.post("http://localhost:3000/google-login", userData);
+      const res = await axios.post("https://server-two-virid.vercel.app/google-login", userData);
       toast.success(res.data.message);
 
       

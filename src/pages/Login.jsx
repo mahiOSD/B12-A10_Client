@@ -15,16 +15,24 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/login", formData);
-      toast.success(res.data.message);
+      const res = await axios.post(
+        "https://server-two-virid.vercel.app/login",
+        formData
+      );
 
+      
+      toast.success(res.data.message, { duration: 3000 });
+
+     
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userEmail", formData.email);
       localStorage.setItem("userName", res.data.name || formData.email);
 
-      navigate("/");
+      
+      setTimeout(() => navigate("/"), 3000);
+
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      toast.error(err.response?.data?.message || "Login failed", { duration: 3000 });
     }
   };
 
@@ -40,30 +48,35 @@ export default function Login() {
       };
 
       const res = await axios.post(
-        "http://localhost:3000/google-login",
+        "https://server-two-virid.vercel.app/google-login",
         userData
       );
-      toast.success(res.data.message);
+
+      toast.success(res.data.message, { duration: 3000 });
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userEmail", user.email);
       localStorage.setItem("userName", user.displayName);
 
-      navigate("/");
+      setTimeout(() => navigate("/"), 3000);
+
     } catch (err) {
       console.error(err);
-      toast.error("Google login failed");
+      toast.error("Google login failed", { duration: 3000 });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-      <Toaster />
+     
+      <Toaster position="top-center" />
+      
       <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-2xl w-full max-w-md transition-all">
         <h2 className="text-3xl font-bold text-center mb-6 text-indigo-600">
           Login
         </h2>
 
+    
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="email"
@@ -81,8 +94,6 @@ export default function Login() {
             onChange={handleChange}
             required
           />
-
-         
           <button
             type="submit"
             className="w-full py-3 rounded-xl bg-linear-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all"
@@ -91,19 +102,19 @@ export default function Login() {
           </button>
         </form>
 
-       
         <button
           onClick={handleGoogleLogin}
           className="w-full py-3 rounded-xl mt-4 bg-linear-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:from-red-600 hover:to-pink-600 transition-all flex items-center justify-center gap-2"
         >
-           <img
-    src="https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png"
-    alt="Google logo"
-    className="w-6 h-6"
-  />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png"
+            alt="Google logo"
+            className="w-6 h-6"
+          />
           Sign in with Google
         </button>
 
+        
         <p className="text-center text-sm mt-4 dark:text-gray-300">
           Don't have an account?{" "}
           <Link to="/register" className="text-indigo-600 hover:underline">

@@ -11,8 +11,8 @@ export default function Courses() {
     const fetchCourses = async () => {
       try {
         const url = category
-          ? `http://localhost:3000/courses?category=${category}`
-          : "http://localhost:3000/courses";
+          ? `https://server-two-virid.vercel.app/courses?category=${category}`
+          : "https://server-two-virid.vercel.app/courses";
         const res = await axios.get(url);
         setCourses(res.data);
       } catch (err) {

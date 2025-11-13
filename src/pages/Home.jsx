@@ -4,21 +4,31 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
-
- 
   const [darkMode, setDarkMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
   useEffect(() => {
+    
+    const token = localStorage.getItem("token");
+    if (token) setIsLoggedIn(true);
+
+   
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") setDarkMode(true);
   }, []);
 
- 
   const toggleTheme = () => {
     const newTheme = !darkMode;
     setDarkMode(newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    setIsLoggedIn(false); 
+    navigate("/login");
   };
 
   const featuredCourses = [
@@ -33,7 +43,8 @@ export default function Home() {
       id: 2,
       title: "Data Science & Machine Learning",
       description: "Master Python, Pandas, and ML algorithms for data insights.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936iEH35itPd2heSJSyJvpSOi_Yd2BwHbtw&s",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936iEH35itPd2heSJSyJvpSOi_Yd2BwHbtw&s",
     },
     {
       id: 3,
@@ -51,7 +62,8 @@ export default function Home() {
       id: 5,
       title: "Cybersecurity Basics",
       description: "Understand online threats and learn how to stay secure.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8t9xeCSpcaycBa0axAEh3_QWLLJWhAXg5w&s",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8t9xeCSpcaycBa0axAEh3_QWLLJWhAXg5w&s",
     },
     {
       id: 6,
@@ -63,9 +75,10 @@ export default function Home() {
 
   return (
     <div className={darkMode ? "dark bg-gray-900 text-white" : "bg-white text-gray-900"}>
-     
-      <div className="fixed top-5 right-5 z-50 flex items-center space-x-2">
-        <span className="text-sm font-medium">{darkMode ? " Dark" : ""}</span>
+    
+      <div className="fixed top-5 right-5 z-50 flex items-center space-x-6">
+        <span className="text-sm font-medium">{darkMode ? "Dark Mode" : ""}</span>
+
         <div
           onClick={toggleTheme}
           className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition ${
@@ -80,43 +93,52 @@ export default function Home() {
             }`}
           />
         </div>
+
+        {isLoggedIn && (
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded-lg text-white font-semibold 
+                       bg-linear-to-r from-purple-500 to-indigo-500 
+                       hover:from-purple-600 hover:to-indigo-600 transition-all"
+          >
+            Logout
+          </button>
+        )}
       </div>
 
-      <div className="mt-0 space-y-24">
-       <section className="text-center px-6 mt-0">
-  <motion.h1
-    className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4 dark:text-indigo-400"
-    initial={{ opacity: 0, y: -30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-  >
-    Welcome to Learnify - Your Path to Knowledge
-  </motion.h1>
-  <motion.p
-    className="text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-300"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.4 }}
-  >
-    Explore expert-led courses, develop real-world skills, and achieve your career goals —
-    all from one platform.
-  </motion.p>
-  <motion.button
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  onClick={() => navigate("/courses")}
-  className="px-6 py-3 rounded-lg font-semibold text-white 
-             bg-linear-to-r from-indigo-500 to-blue-500 
-             hover:from-indigo-600 hover:to-blue-600 
-             transition-all"
->
-  Explore Courses
-</motion.button>
-
-</section>
-
-
       
+      <div className="mt-0 space-y-24">
+        <section className="text-center px-6 mt-0">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4 dark:text-indigo-400"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Welcome to Learnify - Your Path to Knowledge
+          </motion.h1>
+          <motion.p
+            className="text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Explore expert-led courses, develop real-world skills, and achieve your career goals —
+            all from one platform.
+          </motion.p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/courses")}
+            className="px-6 py-3 rounded-lg font-semibold text-white 
+                       bg-linear-to-r from-indigo-500 to-blue-500 
+                       hover:from-indigo-600 hover:to-blue-600 transition-all"
+          >
+            Explore Courses
+          </motion.button>
+        </section>
+
+       
         <section className="px-6">
           <motion.h2
             className="text-3xl font-bold text-center text-gray-800 mb-10 dark:text-gray-200"
@@ -150,7 +172,7 @@ export default function Home() {
           </div>
         </section>
 
-      
+       
         <section className="bg-indigo-50 dark:bg-gray-800 py-16 text-center px-6">
           <motion.h2
             className="text-3xl font-bold text-gray-800 mb-10 dark:text-gray-200"

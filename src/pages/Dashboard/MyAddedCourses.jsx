@@ -10,7 +10,7 @@ export default function MyAddedCourses() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/courses");
+      const res = await axios.get("https://server-two-virid.vercel.app/courses");
       const myCourses = res.data.filter(c => c.ownerEmail === userEmail);
       setCourses(myCourses);
     } catch (err) {
@@ -21,7 +21,7 @@ export default function MyAddedCourses() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
     try {
-      await axios.delete(`http://localhost:3000/courses/${id}`);
+      await axios.delete(`https://server-two-virid.vercel.app/courses/${id}`);
       toast.success("Course deleted successfully!");
       fetchCourses();
     } catch (err) {

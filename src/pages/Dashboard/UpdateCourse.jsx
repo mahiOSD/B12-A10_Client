@@ -18,7 +18,7 @@ export default function UpdateCourse() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/courses/${id}`);
+        const res = await axios.get(`https://server-two-virid.vercel.app/courses/${id}`);
         
         setCourseData({
           title: res.data.title || "",
@@ -43,7 +43,7 @@ export default function UpdateCourse() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/courses/${id}`, courseData);
+      await axios.put(`https://server-two-virid.vercel.app/courses/${id}`, courseData);
       toast.success("Course updated successfully!");
       navigate("/dashboard/my-courses");
     } catch (err) {

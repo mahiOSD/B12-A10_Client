@@ -17,7 +17,7 @@ export default function MyEnrolledCourses() {
       }
 
       const res = await axios.get(
-        `http://localhost:3000/enrolled-courses?email=${userEmail}`
+        `https://server-two-virid.vercel.app/enrolled-courses?email=${userEmail}`
       );
       setCourses(res.data);
     } catch (err) {

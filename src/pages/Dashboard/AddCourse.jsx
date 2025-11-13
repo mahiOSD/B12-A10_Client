@@ -9,14 +9,16 @@ export default function AddCourse() {
     category: "",
     price: "",
     duration: "",
-    instructor: "", 
+    instructor: "",
     imageBase64: "",
     isFeatured: false,
   });
 
- 
+  
+  const categories = ["Web Development", "Data Science", "Design", "Marketing", "Cybersecurity", "Mobile App Development"];
+
   useEffect(() => {
-    const userName = localStorage.getItem("userName"); 
+    const userName = localStorage.getItem("userName");
     if (userName) {
       setCourseData(prev => ({ ...prev, instructor: userName }));
     }
@@ -53,7 +55,7 @@ export default function AddCourse() {
     };
 
     try {
-      await axios.post("http://localhost:3000/courses", newCourse);
+      await axios.post("https://server-two-virid.vercel.app/courses", newCourse);
       toast.success("Course added successfully!");
       setCourseData({
         title: "",
@@ -89,7 +91,7 @@ export default function AddCourse() {
           name="instructor"
           placeholder="Instructor Name"
           value={courseData.instructor}
-          readOnly 
+          readOnly
           className="w-full p-2 border rounded bg-gray-100"
         />
         <input
@@ -110,15 +112,25 @@ export default function AddCourse() {
           required
           className="w-full p-2 border rounded"
         />
-        <input
-          type="text"
+
+       
+        <select
           name="category"
-          placeholder="Category"
           value={courseData.category}
           onChange={handleChange}
           required
           className="w-full p-2 border rounded"
-        />
+        >
+          <option value="" disabled>
+            Select Category
+          </option>
+          {categories.map((cat, i) => (
+            <option key={i} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+
         <textarea
           name="description"
           placeholder="Description"
@@ -127,12 +139,14 @@ export default function AddCourse() {
           required
           className="w-full p-2 border rounded"
         />
+
         <input
           type="file"
           accept="image/*"
           onChange={handleImage}
           className="w-full"
         />
+
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -142,6 +156,7 @@ export default function AddCourse() {
           />
           Featured Course
         </label>
+
         <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
