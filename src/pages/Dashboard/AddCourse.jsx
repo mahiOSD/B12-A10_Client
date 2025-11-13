@@ -22,6 +22,7 @@ export default function AddCourse() {
     });
   };
 
+  
   const handleImage = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -30,25 +31,39 @@ export default function AddCourse() {
     reader.readAsDataURL(file);
   };
 
+  
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("http://localhost:3000/courses", courseData);
-      toast.success("Course added successfully!");
-      setCourseData({
-        title: "",
-        description: "",
-        category: "",
-        price: "",
-        duration: "",
-        instructor: "",
-        imageBase64: "",
-        isFeatured: false,
-      });
-    } catch (err) {
-      toast.error("Failed to add course");
-    }
+  e.preventDefault();
+  const userEmail = localStorage.getItem("userEmail"); 
+
+  if (!userEmail) {
+    toast.error("Please login first!");
+    return;
+  }
+
+  const newCourse = {
+    ...courseData,
+    ownerEmail: userEmail, 
   };
+
+  try {
+    await axios.post("http://localhost:3000/courses", newCourse);
+    toast.success("Course added successfully!");
+    setCourseData({
+      title: "",
+      description: "",
+      category: "",
+      price: "",
+      duration: "",
+      instructor: "",
+      imageBase64: "",
+      isFeatured: false,
+    });
+  } catch (err) {
+    toast.error("Failed to add course");
+  }
+};
+
 
   return (
     <div className="p-6 max-w-lg mx-auto">

@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 export default function MyAddedCourses() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
-
   const userEmail = localStorage.getItem("userEmail"); 
 
   const fetchCourses = async () => {
     try {
       const res = await axios.get("http://localhost:3000/courses");
-      
       const myCourses = res.data.filter(c => c.ownerEmail === userEmail);
       setCourses(myCourses);
     } catch (err) {
@@ -25,9 +23,8 @@ export default function MyAddedCourses() {
     try {
       await axios.delete(`http://localhost:3000/courses/${id}`);
       toast.success("Course deleted successfully!");
-      fetchCourses(); 
+      fetchCourses();
     } catch (err) {
-      console.error(err);
       toast.error("Failed to delete course.");
     }
   };
@@ -38,17 +35,24 @@ export default function MyAddedCourses() {
 
   return (
     <div className="pt-24 px-4">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">My Added Courses</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        My Added Courses
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map(course => (
-          <div key={course._id} className="bg-white p-4 rounded-2xl shadow-lg flex flex-col">
+        {courses.map((course) => (
+          <div
+            key={course._id}
+            className="bg-white p-4 rounded-2xl shadow-lg flex flex-col"
+          >
             <img
               src={course.image}
               alt={course.title}
               className="w-full h-40 object-cover rounded-lg mb-4"
             />
-            <h3 className="text-xl font-bold text-indigo-600 mb-2">{course.title}</h3>
-            <p className="text-gray-500 mb-2">Price: ৳{course.price}</p>
+            <h3 className="text-xl font-bold text-indigo-600 mb-2">
+              {course.title}
+            </h3>
+            <p className="text-gray-500 mb-2">৳{course.price}</p>
             <div className="mt-auto flex gap-2">
               <button
                 onClick={() => navigate(`/courses/${course._id}`)}

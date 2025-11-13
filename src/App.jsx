@@ -20,6 +20,7 @@ function App() {
       <Header />
       <div className="min-h-[80vh] pt-20 px-4">
         <Routes>
+         
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route
@@ -32,6 +33,8 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+       
           <Route
             path="/dashboard"
             element={
@@ -43,9 +46,25 @@ function App() {
             <Route path="enrolled" element={<MyEnrolledCourses />} />
             <Route path="add-course" element={<AddCourse />} />
             <Route path="my-courses" element={<MyAddedCourses />} />
-            <Route path="update-course/:id" element={<UpdateCourse />} />
-
+            <Route
+              path="update-course/:id"
+              element={
+                <PrivateRoute>
+                  <UpdateCourse />
+                </PrivateRoute>
+              }
+            />
           </Route>
+
+          
+          <Route
+            path="/update-course/:id"
+            element={
+              <PrivateRoute>
+                <UpdateCourse />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
       <Footer />

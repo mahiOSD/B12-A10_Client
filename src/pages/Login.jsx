@@ -12,32 +12,42 @@ export default function Login() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:3000/login", formData);
       toast.success(res.data.message);
+
+      
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userEmail", formData.email);
+
       navigate("/");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
     }
   };
 
- 
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
       const userData = {
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
       };
+
       const res = await axios.post("http://localhost:3000/google-login", userData);
       toast.success(res.data.message);
+
+      
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userEmail", user.email);
+
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -48,6 +58,7 @@ export default function Login() {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-auto mt-20">
       <h2 className="text-2xl font-bold text-center mb-6 text-indigo-600">Login</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           name="email"
