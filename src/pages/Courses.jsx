@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [category, setCategory] = useState("");
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -52,7 +54,10 @@ export default function Courses() {
             <p className="text-gray-600 mb-2">{course.description}</p>
             <p className="text-gray-500 mb-2">Category: {course.category}</p>
             <p className="text-gray-500 mb-4">Price: ৳{course.price}</p>
-            <button className="mt-auto bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-all">
+            <button
+              onClick={() => navigate(`/courses/${course._id}`)} 
+              className="mt-auto bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-all"
+            >
               View Details
             </button>
           </div>
