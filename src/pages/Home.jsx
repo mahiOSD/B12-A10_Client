@@ -1,27 +1,45 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+
+ 
+  const [darkMode, setDarkMode] = useState(false);
+
+  
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") setDarkMode(true);
+  }, []);
+
+ 
+  const toggleTheme = () => {
+    const newTheme = !darkMode;
+    setDarkMode(newTheme);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
 
   const featuredCourses = [
     {
       id: 1,
       title: "Full Stack Web Development",
       description: "Learn HTML, CSS, JavaScript, React & Node.js from scratch.",
-      image: "https://img.freepik.com/free-photo/programming-background-with-person-working-with-codes-computer_23-2150010134.jpg",
+      image:
+        "https://jaro-website.s3.ap-south-1.amazonaws.com/2024/07/full-stack-web-developer.png",
     },
     {
       id: 2,
       title: "Data Science & Machine Learning",
       description: "Master Python, Pandas, and ML algorithms for data insights.",
-      image: "https://img.freepik.com/free-photo/ai-machine-learning-concept_23-2148686048.jpg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR936iEH35itPd2heSJSyJvpSOi_Yd2BwHbtw&s",
     },
     {
       id: 3,
       title: "UI/UX Design",
       description: "Create stunning designs and user experiences using Figma.",
-      image: "https://img.freepik.com/free-photo/ui-ux-designers-working-app_23-2148689040.jpg",
+      image: "https://www.aceinfoway.com/blog/wp-content/uploads/2020/05/uiux_2.jpg",
     },
     {
       id: 4,
@@ -33,7 +51,7 @@ export default function Home() {
       id: 5,
       title: "Cybersecurity Basics",
       description: "Understand online threats and learn how to stay secure.",
-      image: "https://img.freepik.com/free-photo/hacker-background_53876-101619.jpg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8t9xeCSpcaycBa0axAEh3_QWLLJWhAXg5w&s",
     },
     {
       id: 6,
@@ -44,132 +62,161 @@ export default function Home() {
   ];
 
   return (
-    <div className="mt-24 space-y-24">
-     
-      <section className="text-center px-6">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <div className={darkMode ? "dark bg-gray-900 text-white" : "bg-white text-gray-900"}>
+      {/* 🌗 Theme Switch */}
+      <div className="fixed top-5 right-5 z-50 flex items-center space-x-2">
+        <span className="text-sm font-medium">{darkMode ? "🌙 Dark" : "☀️ Light"}</span>
+        <div
+          onClick={toggleTheme}
+          className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition ${
+            darkMode ? "bg-indigo-600" : "bg-gray-300"
+          }`}
         >
-          Welcome to Learnify – Your Path to Knowledge 
-        </motion.h1>
-        <motion.p
-          className="text-gray-600 mb-8 max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          Explore expert-led courses, develop real-world skills, and achieve your career goals
-          — all from one platform.
-        </motion.p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate("/courses")}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
-        >
-          Explore Courses
-        </motion.button>
-      </section>
-
-     
-      <section className="px-6">
-        <motion.h2
-          className="text-3xl font-bold text-center text-gray-800 mb-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-           Popular Courses
-        </motion.h2>
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {featuredCourses.map((course, index) => (
-            <motion.div
-              key={course.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <img src={course.image} alt={course.title} className="h-48 w-full object-cover" />
-              <div className="p-5">
-                <h3 className="text-xl font-semibold text-indigo-600">{course.title}</h3>
-                <p className="text-gray-600 mt-2 text-sm">{course.description}</p>
-              </div>
-            </motion.div>
-          ))}
+          <motion.div
+            layout
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className={`w-5 h-5 rounded-full bg-white shadow-md transform ${
+              darkMode ? "translate-x-6" : "translate-x-0"
+            }`}
+          />
         </div>
-      </section>
+      </div>
 
-    
-      <section className="bg-indigo-50 py-16 text-center px-6">
-        <motion.h2
-          className="text-3xl font-bold text-gray-800 mb-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-           Why Choose Learnify?
-        </motion.h2>
-        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {[
-            { title: "Expert Instructors", desc: "Learn from industry professionals with real experience." },
-            { title: "Flexible Learning", desc: "Access courses anytime, anywhere on any device." },
-            { title: "Certifications", desc: "Earn certificates to showcase your skills to employers." },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
-              whileHover={{ scale: 1.03 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-            >
-              <h3 className="text-xl font-semibold text-indigo-600">{item.title}</h3>
-              <p className="text-gray-600 mt-2">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <div className="mt-24 space-y-24">
+        {/* Hero Section */}
+        <section className="text-center px-6">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold text-indigo-600 mb-4 dark:text-indigo-400"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Welcome to Learnify – Your Path to Knowledge
+          </motion.h1>
+          <motion.p
+            className="text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Explore expert-led courses, develop real-world skills, and achieve your career goals —
+            all from one platform.
+          </motion.p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/courses")}
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition dark:bg-indigo-500 dark:hover:bg-indigo-600"
+          >
+            Explore Courses
+          </motion.button>
+        </section>
 
-     
-      <section className="px-6 pb-20 text-center">
-        <motion.h2
-          className="text-3xl font-bold text-gray-800 mb-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          Top Instructors
-        </motion.h2>
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {[
-            { name: "Sarah Ahmed", role: "Web Development Expert", photo: "https://randomuser.me/api/portraits/women/44.jpg" },
-            { name: "John Smith", role: "Data Science Mentor", photo: "https://randomuser.me/api/portraits/men/32.jpg" },
-            { name: "Emily Davis", role: "UI/UX Designer", photo: "https://randomuser.me/api/portraits/women/68.jpg" },
-          ].map((instructor, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
-              whileHover={{ scale: 1.03 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-            >
-              <img
-                src={instructor.photo}
-                alt={instructor.name}
-                className="w-28 h-28 mx-auto rounded-full mb-4 object-cover"
-              />
-              <h3 className="text-lg font-semibold text-indigo-600">{instructor.name}</h3>
-              <p className="text-gray-600">{instructor.role}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+        {/* Popular Courses */}
+        <section className="px-6">
+          <motion.h2
+            className="text-3xl font-bold text-center text-gray-800 mb-10 dark:text-gray-200"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Popular Courses
+          </motion.h2>
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {featuredCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
+                whileHover={{ scale: 1.02 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <img src={course.image} alt={course.title} className="h-48 w-full object-cover" />
+                <div className="p-5">
+                  <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 mt-2 dark:text-gray-300 text-sm">
+                    {course.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why Choose Learnify */}
+        <section className="bg-indigo-50 dark:bg-gray-800 py-16 text-center px-6">
+          <motion.h2
+            className="text-3xl font-bold text-gray-800 mb-10 dark:text-gray-200"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Why Choose Learnify?
+          </motion.h2>
+          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            {[
+              { title: "Expert Instructors", desc: "Learn from industry professionals with real experience." },
+              { title: "Flexible Learning", desc: "Access courses anytime, anywhere on any device." },
+              { title: "Certifications", desc: "Earn certificates to showcase your skills to employers." },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
+                whileHover={{ scale: 1.03 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 mt-2 dark:text-gray-300">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Top Instructors */}
+        <section className="px-6 pb-20 text-center">
+          <motion.h2
+            className="text-3xl font-bold text-gray-800 mb-10 dark:text-gray-200"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            Top Instructors
+          </motion.h2>
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {[
+              { name: "Sarah Ahmed", role: "Web Development Expert", photo: "https://randomuser.me/api/portraits/women/44.jpg" },
+              { name: "John Smith", role: "Data Science Mentor", photo: "https://randomuser.me/api/portraits/men/32.jpg" },
+              { name: "Emily Davis", role: "UI/UX Designer", photo: "https://randomuser.me/api/portraits/women/68.jpg" },
+            ].map((instructor, i) => (
+              <motion.div
+                key={i}
+                className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
+                whileHover={{ scale: 1.03 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <img
+                  src={instructor.photo}
+                  alt={instructor.name}
+                  className="w-28 h-28 mx-auto rounded-full mb-4 object-cover"
+                />
+                <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400">
+                  {instructor.name}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">{instructor.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
