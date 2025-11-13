@@ -10,9 +10,8 @@ export default function CourseDetails() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/courses`);
-        const found = res.data.find((c) => c._id === id);
-        setCourse(found);
+        const res = await axios.get(`http://localhost:3000/courses/${id}`);
+        setCourse(res.data);
       } catch (err) {
         toast.error("Failed to fetch course");
       }
@@ -20,8 +19,19 @@ export default function CourseDetails() {
     fetchCourse();
   }, [id]);
 
-  const handleEnroll = () => {
-    toast.success("Enrolled successfully!");
+  const handleEnroll = async () => {
+    try {
+      const userEmail = localStorage.getItem("userEmail");
+      if (!userEmail) {
+        toast.error("You must be logged in to enroll.");
+        return;
+      }
+
+      await axios.post(`http://localhost:3000/enroll/${id}`, { email: userEmail });
+      toast.success("Enrolled successfully!");
+    } catch (err) {
+      toast.error("Failed to enroll in course");
+    }
   };
 
   if (!course) return <p className="text-center mt-10">Loading...</p>;

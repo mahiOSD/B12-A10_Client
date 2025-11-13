@@ -6,25 +6,42 @@ import toast, { Toaster } from "react-hot-toast";
 export default function CourseDetails() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/courses`);
-        const found = res.data.find((c) => c._id === id);
-        setCourse(found);
+        const res = await axios.get(`http://localhost:3000/courses/${id}`);
+        setCourse(res.data);
       } catch (err) {
         toast.error("Failed to fetch course");
+      } finally {
+        setLoading(false);
       }
     };
     fetchCourse();
   }, [id]);
 
-  const handleEnroll = () => {
-    toast.success("Enrolled successfully!");
+  
+  const handleEnroll = async () => {
+    try {
+      const userEmail = localStorage.getItem("userEmail");
+      if (!userEmail) {
+        toast.error("You must be logged in to enroll.");
+        return;
+      }
+
+      await axios.post(`http://localhost:3000/enroll/${id}`, { email: userEmail });
+      toast.success("Enrolled successfully!");
+    } catch (err) {
+      toast.error("Enrollment failed.");
+      console.error(err);
+    }
   };
 
-  if (!course) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!course) return <p className="text-center mt-10">Course not found.</p>;
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
